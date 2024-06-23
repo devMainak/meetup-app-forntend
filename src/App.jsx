@@ -4,7 +4,7 @@ import AllMeetUps from "./pages/AllMeetUps";
 
 export default function App() {
   return (
-    <main className="bg-light">
+    <main>
       <Header />
         <AllMeetUps />
     </main>
