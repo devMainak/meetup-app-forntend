@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const Header = () => {
+const Header = ({searchTerm, onSearch}) => {
   return (
     <header>
       <nav className="navbar bg-dark">
@@ -14,6 +14,8 @@ const Header = () => {
               type="search"
               placeholder="🔍 Search by title and tags"
               aria-label="Search"
+              value={searchTerm}
+              onChange={onSearch}
             />
           </form>
         </div>

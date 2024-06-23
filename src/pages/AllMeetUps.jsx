@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import useFetch from '../useFetch'
 import { Link } from 'react-router-dom'
+import Header from "../components/Header";
 
 const AllMeetUps = () => {
   const [dataToShow, setDataToShow] = useState()
+  const [searchTerm, setSearchTerm] = useState('')
   
   const { data, loading, error } = useFetch("https://0dbfa1b4-0534-473b-ad03-b8548701243a-00-2rbv4xhagcq8f.sisko.replit.dev/meetups")
 
@@ -26,8 +28,16 @@ const AllMeetUps = () => {
       console.log(dataToShow)
     }
   }
+
+  const handleSearch = (e) => {
+    const  { value } = e.target
+    setSearchTerm(value)
+    setDataToShow(data.filter(meetup => meetup.title.toLowerCase().includes(value.toLowerCase)  || meetup.eventTags.map(tag => tag.toLowerCase()).includes(value.toLowerCase())))
+  }
   
   return (
+    <>
+      <Header searchTerm={searchTerm} onSearch={handleSearch}/>
     <div className="bg-light" style={{height: "100vh"}}>
       <div className="container p-4">
         <div className="d-flex justify-content-between align-items-center">
@@ -44,7 +54,7 @@ const AllMeetUps = () => {
           { dataToShow ? dataToShow.map(meetup => {
       return (
         <div key={meetup._id} className='col-md-4'>
-          <Link>
+          <Link to={`/${meetup._id}`}>
           <div className="card mt-3" >
             <div className="card text-bg-dark">
               <img src={meetup.coverImage} class="card-img" alt={meetup.title} style={{height: "15rem"}}/>
@@ -67,6 +77,7 @@ const AllMeetUps = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
